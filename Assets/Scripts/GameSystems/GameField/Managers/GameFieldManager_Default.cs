@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class GameFieldManager_Default : MonoBehaviour
+public class GameFieldManager_Default : GameSystem_Base, IGameFieldManager
 {
-   
+
 }
