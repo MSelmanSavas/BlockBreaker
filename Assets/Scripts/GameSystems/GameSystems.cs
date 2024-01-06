@@ -21,7 +21,7 @@ public class GameSystems : MonoBehaviour
 #endif
     List<GameSystem_Base> _updateGameSystems = new();
 
-    #if ODIN_INSPECTOR
+#if ODIN_INSPECTOR
     [Sirenix.OdinInspector.ShowInInspector]
 #endif
     List<GameSystem_Base> _lateUpdateGameSystems = new();
@@ -43,7 +43,7 @@ public class GameSystems : MonoBehaviour
             }
         }
 
-         foreach (var system in _lateUpdateGameSystems)
+        foreach (var system in _lateUpdateGameSystems)
         {
             if (!system.TryInitialize(this))
             {
@@ -65,6 +65,20 @@ public class GameSystems : MonoBehaviour
     {
         GameSystem_Base gameSystem = Activator.CreateInstance(typeof(T)) as GameSystem_Base;
         return TryAddGameSystem(gameSystem);
+    }
+
+    public bool TryGetGameSystemByType<T>(out T gameSystem) where T : GameSystem_Base
+    {
+        GameSystem_Base foundGameSystem = _updateGameSystems.Where(x => x.GetType() == typeof(T)).First();
+
+        if (foundGameSystem == null)
+        {
+            gameSystem = null;
+            return false;
+        }
+
+        gameSystem = foundGameSystem as T;
+        return true;
     }
 
     public bool TryRemoveGameSystem(GameSystem_Base gameSystem)
@@ -97,6 +111,20 @@ public class GameSystems : MonoBehaviour
     {
         GameSystem_Base gameSystem = Activator.CreateInstance(typeof(T)) as GameSystem_Base;
         return TryAddLateUpdateGameSystem(gameSystem);
+    }
+
+    public bool TryGetLateUpdateGameSystemByType<T>(out T gameSystem) where T : GameSystem_Base
+    {
+        GameSystem_Base foundGameSystem = _lateUpdateGameSystems.Where(x => x.GetType() == typeof(T)).First();
+
+        if (foundGameSystem == null)
+        {
+            gameSystem = null;
+            return false;
+        }
+
+        gameSystem = foundGameSystem as T;
+        return true;
     }
 
     public bool TryRemoveLateUpdateGameSystem(GameSystem_Base gameSystem)
