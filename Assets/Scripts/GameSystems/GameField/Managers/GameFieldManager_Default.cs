@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class GameFieldManager_Default : GameSystem_Base
 {
+    Vector2Int GameFieldSize;
     Dictionary<Vector2Int, IGameEntity> _entities = new();
     public override bool TryInitialize(GameSystems gameSystems)
     {

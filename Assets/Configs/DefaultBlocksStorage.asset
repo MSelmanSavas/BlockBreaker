@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a9d119edfe3d5a4e8e89350a2dfb6ea, type: 3}
+  m_Name: DefaultBlocksStorage
+  m_EditorClassIdentifier: 
+  BlockStorageDatas:
+    keyData:
+    - _typeString: Block_Bomb, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    - _typeString: Block_HorizontalExploder, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    - _typeString: Block_Standard, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    - _typeString: Block_VerticalExploder, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    valueData:
+    - Prefab: {fileID: 5692121619196870337, guid: 769ceefdb776a5a42b871f08938f1335, type: 3}
+    - Prefab: {fileID: 5692121619196870337, guid: 705561d5dbaadbc47b749a6f066b4424, type: 3}
+    - Prefab: {fileID: 5692121619196870337, guid: 72b678394b3b9f946b1dd60cc6cc6137, type: 3}
+    - Prefab: {fileID: 5692121619196870337, guid: 7b488c85d4287e2468aec54da2ac359a, type: 3}

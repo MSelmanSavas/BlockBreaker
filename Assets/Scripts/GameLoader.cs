@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class GameLoader : MonoBehaviour
 {
+    [SerializeField]
+    GameConfig GameConfig;
+
     private void Start()
     {
+        RefBook.Add(GameConfig);
+        
         GameObject gameSystemsObj = new GameObject
         {
             name = "GameSystems"

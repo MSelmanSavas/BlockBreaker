@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Codeflow.Execution
 {
     [System.Serializable]
-    [CreateAssetMenu(fileName = "ScriptableCodeflowExecutor", menuName = "Link Journey/Scriptable Datas/Codeflow/Scriptable Codeflow Executor", order = 0)]
+    [CreateAssetMenu(fileName = "ScriptableCodeflowExecutor", menuName = "Scriptable Datas/Codeflow/Scriptable Codeflow Executor", order = 0)]
     public class ScriptableCodeflowExecutor : ScriptableObject
     {
         [field: SerializeReference]

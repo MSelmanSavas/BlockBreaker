@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameEntity_Base : MonoBehaviour, IGameEntity
@@ -38,6 +37,10 @@ public class GameEntity_Base : MonoBehaviour, IGameEntity
         }
     }
 
+    public virtual bool OnLoad() { return true; }
+    public virtual bool OnAfter() { return true; }
+    public virtual bool OnSpawned() { return true; }
+    
     public bool TryGetData<T>(out T data) where T : GameEntityData_Base
     {
         if (!_entityDatas.TryGetValue(typeof(T), out GameEntityData_Base baseData))
@@ -65,5 +68,13 @@ public class GameEntity_Base : MonoBehaviour, IGameEntity
             return false;
 
         return _entityDatas.Remove(typeof(T));
+    }
+
+    public bool TryAddAndGetData<T>(out T data) where T : GameEntityData_Base
+    {
+        if (TryGetData(out data))
+            return true;
+
+        return TryAddData(data);
     }
 }
