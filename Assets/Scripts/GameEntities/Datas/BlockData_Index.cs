@@ -1,11 +1,11 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlockData_Index
+[System.Serializable]
+public class BlockData_Index : GameEntityData_Base
 {
     HashSet<Vector2Int> _indices = new();
-    
+
     public ICollection<Vector2Int> GetIndices() => _indices;
 
     public void AddIndices(ICollection<Vector2Int> indices)
@@ -16,7 +16,7 @@ public class BlockData_Index
 
     public void RemoveIndices(ICollection<Vector2Int> indices)
     {
-          foreach (var index in indices)
+        foreach (var index in indices)
             _indices.Remove(index);
     }
 

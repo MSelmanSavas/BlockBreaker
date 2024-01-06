@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class BlockData_GameFieldManager : MonoBehaviour
+[System.Serializable]
+public class BlockData_GameFieldManager : GameEntityData_Base
 {
     IGameFieldManager _connectedFieldManager;
     public IGameFieldManager GetAttachedGameFieldManager() => _connectedFieldManager;
