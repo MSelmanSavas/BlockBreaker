@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a9d119edfe3d5a4e8e89350a2dfb6ea, type: 3}
   m_Name: DefaultBlocksStorage
   m_EditorClassIdentifier: 
+  <BlockPixelSize>k__BackingField: {x: 32, y: 9}
   BlockStorageDatas:
     keyData:
     - _typeString: Block_Bomb, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,

@@ -4,4 +4,5 @@ public enum LogCategory
     Codeflow = 0,
     GameSystems = 1,
     GameField = 2,
+    GameLoader = 3,
 }
