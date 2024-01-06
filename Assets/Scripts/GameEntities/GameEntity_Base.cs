@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameEntity_Base : MonoBehaviour, IGameEntity
 {
     Dictionary<System.Type, GameEntityData_Base> _entityDatas = new();
+    Dictionary<System.Type, GameEntityAction_Base> _entityActions = new();
 
     protected virtual void Awake()
     {
@@ -14,6 +15,19 @@ public class GameEntity_Base : MonoBehaviour, IGameEntity
             {
                 if (!entityDataKV.Value.TryInitialize(this))
                     throw new System.Exception($"Cannot initialize data type : {entityDataKV.Key}!");
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"Error while initializing data on {gameObject.name}! Error : {e}");
+            }
+        }
+
+        foreach (var entityActionsKV in _entityActions)
+        {
+            try
+            {
+                if (!entityActionsKV.Value.TryInitialize(this))
+                    throw new System.Exception($"Cannot initialize data type : {entityActionsKV.Key}!");
             }
             catch (System.Exception e)
             {
