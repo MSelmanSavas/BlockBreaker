@@ -4,6 +4,9 @@ using UnityEngine;
 [System.Serializable]
 public class BlockData_Index : GameEntityData_Base
 {
+#if ODIN_INSPECTOR
+    [Sirenix.OdinInspector.ShowInInspector]
+#endif
     HashSet<Vector2Int> _indices = new();
 
     public ICollection<Vector2Int> GetIndices() => _indices;
