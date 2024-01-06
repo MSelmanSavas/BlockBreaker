@@ -1,11 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameEntity_Base : MonoBehaviour, IGameEntity
 {
-    Dictionary<System.Type, GameEntityData_Base> _entityDatas = new();
-    Dictionary<System.Type, GameEntityAction_Base> _entityActions = new();
+    [SerializeField]
+    EntityDataDictionary _entityDatas = new();
+
+    [SerializeField]
+    EntityActionDictionary _entityActions = new();
 
     protected virtual void Awake()
     {
