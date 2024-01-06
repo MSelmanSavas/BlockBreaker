@@ -6,6 +6,22 @@ public class GameEntity_Base : MonoBehaviour, IGameEntity
 {
     Dictionary<System.Type, GameEntityData_Base> _entityDatas = new();
 
+    protected virtual void Awake()
+    {
+        foreach (var entityDataKV in _entityDatas)
+        {
+            try
+            {
+                if (!entityDataKV.Value.TryInitialize(this))
+                    throw new System.Exception($"Cannot initialize data type : {entityDataKV.Key}!");
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"Error while initializing data on {gameObject.name}! Error : {e}");
+            }
+        }
+    }
+
     public bool TryGetData<T>(out T data) where T : GameEntityData_Base
     {
         if (!_entityDatas.TryGetValue(typeof(T), out GameEntityData_Base baseData))
