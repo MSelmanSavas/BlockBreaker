@@ -16,3 +16,5 @@ MonoBehaviour:
   <GameFieldCenter>k__BackingField: {x: 0, y: 1}
   <GamefieldBoundryStorage>k__BackingField: {fileID: 11400000, guid: ad9ba730cbe32694e8a6c98e4bc7193f, type: 2}
   <BlocksStorage>k__BackingField: {fileID: 11400000, guid: c34e26f3af8928149958ba6f6ada240b, type: 2}
+  <PaddleStorage>k__BackingField: {fileID: 11400000, guid: a420e6416100b66419c78831d31e6fc7, type: 2}
+  <BallStorage>k__BackingField: {fileID: 11400000, guid: cc93d4c369e332d4a86217b426ea1ae7, type: 2}

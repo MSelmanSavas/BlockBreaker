@@ -10,7 +10,7 @@ public class GameLoader : MonoBehaviour
     private void Start()
     {
         RefBook.Add(GameConfig);
-        
+
         GameObject gameSystemsObj = new GameObject
         {
             name = "GameSystems"
@@ -20,6 +20,9 @@ public class GameLoader : MonoBehaviour
         gameSystems.TryAddGameSystemByType<GameFieldBoundryLoader>();
         gameSystems.TryAddGameSystemByType<GameFieldManager_Default>();
         gameSystems.TryAddGameSystemByType<GameFieldLoader_Random>();
+        gameSystems.TryAddGameSystemByType<GameStateManager>();
+        gameSystems.TryAddGameSystemByType<GameFieldPaddleAndBallLoader>();
+        gameSystems.TryAddGameSystemByType<GameInputManager>();
 
         gameSystems.Initialize();
     }
