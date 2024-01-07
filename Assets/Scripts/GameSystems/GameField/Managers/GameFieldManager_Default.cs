@@ -5,6 +5,7 @@ public class GameFieldManager_Default : GameSystem_Base
 {
     public Vector2Int GameFieldSize { get; private set; }
     public Vector2 GameFieldOrigin { get; private set; }
+    public Vector2 GameFieldCenter { get; private set; }
     public Vector2 GameFieldOffset { get; private set; }
     public Vector2 GameFieldCellSize { get; private set; }
     Transform _gameFieldParent;
@@ -34,6 +35,7 @@ public class GameFieldManager_Default : GameSystem_Base
         GameFieldOrigin = Vector2.zero;
         GameFieldCellSize = _blockStorage.BlockWorldSize;
         GameFieldOffset = gameConfig.GameFieldOffset;
+        GameFieldCenter = gameConfig.GameFieldCenter;
 
         _gameFieldParent = new GameObject()
         {
@@ -54,6 +56,7 @@ public class GameFieldManager_Default : GameSystem_Base
             y = (GameFieldCellSize.y / 2f) + ((GameFieldSize.y - 1) / 2f * GameFieldCellSize.y)
         };
 
+        GameFieldOrigin += GameFieldCenter;
         GameFieldOrigin += GameFieldOffset;
     }
 

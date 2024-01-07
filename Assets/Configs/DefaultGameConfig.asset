@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: DefaultGameConfig
   m_EditorClassIdentifier: 
   <GameFieldOffset>k__BackingField: {x: 0.5, y: 0}
+  <GameFieldCenter>k__BackingField: {x: 0, y: 5}
   <BlocksStorage>k__BackingField: {fileID: 11400000, guid: c34e26f3af8928149958ba6f6ada240b, type: 2}
