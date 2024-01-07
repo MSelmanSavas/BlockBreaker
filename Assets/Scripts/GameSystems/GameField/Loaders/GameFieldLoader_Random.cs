@@ -41,29 +41,17 @@ public class GameFieldLoader_Random : GameSystem_Base
     //TODO : Remove position calculation from here and carry all of the position stuff to gamefield manager.
     void LoadLevelOnGameField(GameFieldManager_Default gameFieldManager, ScriptableBlocksStorage scriptableBlocksStorage)
     {
-        Vector2 blockWorldSize = scriptableBlocksStorage.BlockWorldSize;
-        Vector2 screenLeftRightXBounds = new Vector2(Camera.main.ViewportToWorldPoint(new Vector3(0f, 0f, 0f)).x, Camera.main.ViewportToWorldPoint(new Vector3(1f, 0f, 0f)).x);
-        Vector2 screenUpDownYBounds = new Vector2(Camera.main.ViewportToWorldPoint(new Vector3(0f, 0f, 0f)).y, Camera.main.ViewportToWorldPoint(new Vector3(0f, 1f, 0f)).y);
+        Vector2Int GameFieldSize = new Vector2Int(10, 20);
+        _gameFieldManager.SetGameFieldSize(GameFieldSize);
 
-        float widthSize = screenLeftRightXBounds.y - screenLeftRightXBounds.x;
-        float heightSize = screenUpDownYBounds.y - screenUpDownYBounds.x;
-
-        Vector2Int countToFit = new Vector2Int((int)(widthSize / blockWorldSize.x), (int)(heightSize / blockWorldSize.y));
-
-        Vector2 startPosition = new Vector2
-        {
-            x = (-blockWorldSize.x / 2f) - ((countToFit.x - 1) / 2f * blockWorldSize.x),
-            y = (blockWorldSize.y / 2f) + ((countToFit.y - 1) / 2f * blockWorldSize.y)
-        };
-
-        for (int y = 0; y < countToFit.y; y++)
-            for (int x = 0; x < countToFit.x; x++)
+        for (int y = 0; y < GameFieldSize.y; y++)
+            for (int x = 0; x < GameFieldSize.x; x++)
             {
                 Vector2Int index = new(x, y);
-                Vector2 offsetPosition = startPosition + new Vector2(x * blockWorldSize.x, y * -blockWorldSize.y);
+                Vector2 position = _gameFieldManager.GetGameFieldPositionFromIndex(index);
 
                 GameObject randomBlockPrefab = GetRandomBlockPrefab(scriptableBlocksStorage);
-                GameObject spawnedBlock = GameObject.Instantiate(randomBlockPrefab, offsetPosition, Quaternion.identity);
+                GameObject spawnedBlock = GameObject.Instantiate(randomBlockPrefab, position, Quaternion.identity);
             }
     }
 

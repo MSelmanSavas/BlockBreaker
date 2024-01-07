@@ -4,7 +4,8 @@ using UnityEngine;
 public class GameFieldManager_Default : GameSystem_Base
 {
     public Vector2Int GameFieldSize { get; private set; }
-    public Vector2 GameFieldCenter { get; private set; }
+    public Vector2 GameFieldOrigin { get; private set; }
+    public Vector2 GameFieldOffset { get; private set; }
     public Vector2 GameFieldCellSize { get; private set; }
     Transform _gameFieldParent;
     Dictionary<Vector2Int, IGameEntity> _entities = new();
@@ -30,7 +31,9 @@ public class GameFieldManager_Default : GameSystem_Base
 
         _blockStorage = gameConfig.BlocksStorage;
 
-        GameFieldCenter = Vector2.zero;
+        GameFieldOrigin = Vector2.zero;
+        GameFieldCellSize = _blockStorage.BlockWorldSize;
+        GameFieldOffset = gameConfig.GameFieldOffset;
 
         _gameFieldParent = new GameObject()
         {
@@ -44,28 +47,20 @@ public class GameFieldManager_Default : GameSystem_Base
     public void SetGameFieldSize(Vector2Int gamefieldSize)
     {
         GameFieldSize = gamefieldSize;
+
+        GameFieldOrigin = new Vector2
+        {
+            x = (-GameFieldCellSize.x / 2f) - ((GameFieldSize.x - 1) / 2f * GameFieldCellSize.x),
+            y = (GameFieldCellSize.y / 2f) + ((GameFieldSize.y - 1) / 2f * GameFieldCellSize.y)
+        };
+
+        GameFieldOrigin += GameFieldOffset;
     }
 
     public Vector2 GetGameFieldPositionFromIndex(Vector2Int index)
     {
-        Vector2 blockWorldSize = _blockStorage.BlockWorldSize;
-        GameFieldCellSize = blockWorldSize;
-
-        Vector2 screenLeftRightXBounds = new Vector2(Camera.main.ViewportToWorldPoint(new Vector3(0f, 0f, 0f)).x, Camera.main.ViewportToWorldPoint(new Vector3(1f, 0f, 0f)).x);
-        Vector2 screenUpDownYBounds = new Vector2(Camera.main.ViewportToWorldPoint(new Vector3(0f, 0f, 0f)).y, Camera.main.ViewportToWorldPoint(new Vector3(0f, 1f, 0f)).y);
-
-        float widthSize = screenLeftRightXBounds.y - screenLeftRightXBounds.x;
-        float heightSize = screenUpDownYBounds.y - screenUpDownYBounds.x;
-
-        Vector2Int countToFit = new Vector2Int((int)(widthSize / blockWorldSize.x), (int)(heightSize / blockWorldSize.y));
-
-        Vector2 startPosition = new Vector2
-        {
-            x = (-blockWorldSize.x / 2f) - ((countToFit.x - 1) / 2f * blockWorldSize.x),
-            y = (blockWorldSize.y / 2f) + ((countToFit.y - 1) / 2f * blockWorldSize.y)
-        };
-
-        return Vector2.zero;
+        return GameFieldOrigin + new Vector2(index.x * GameFieldCellSize.x,
+                            index.y * GameFieldCellSize.y);
     }
 
     public bool TryAddGameEntity(Vector2Int index, IGameEntity gameEntity)

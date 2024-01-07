@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0c43b981de53e548a9f9f9a861bd9bc, type: 3}
   m_Name: DefaultGameConfig
   m_EditorClassIdentifier: 
+  <GameFieldOffset>k__BackingField: {x: 0.5, y: 0}
   <BlocksStorage>k__BackingField: {fileID: 11400000, guid: c34e26f3af8928149958ba6f6ada240b, type: 2}
