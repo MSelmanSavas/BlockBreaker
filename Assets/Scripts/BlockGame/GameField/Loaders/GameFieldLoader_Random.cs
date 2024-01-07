@@ -59,7 +59,6 @@ public class GameFieldLoader_Random : GameSystem_Base
 
     GameObject GetRandomBlockPrefab(ScriptableBlocksStorage scriptableBlocksStorage)
     {
-        return scriptableBlocksStorage.BlockStorageDatas[typeof(Block_Standard)].Prefab;
         return scriptableBlocksStorage.BlockStorageDatas.ElementAt(Random.Range(0, scriptableBlocksStorage.BlockStorageDatas.Count)).Value.Prefab;
     }
 }

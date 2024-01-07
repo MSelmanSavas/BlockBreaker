@@ -59,12 +59,15 @@ MonoBehaviour:
         PublicKeyToken=null
     - _typeString: BlockData_GameObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
+    - _typeString: BlockData_ChangeSpriteOnHealthChange, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
     valueData:
     - rid: 5642401357908934656
     - rid: 5642401357908934657
     - rid: 5642401357908934658
     - rid: 5642401357908934659
     - rid: 5642401372736847872
+    - rid: 5642401372736847956
   _entityActions:
     keyData: []
     valueData: []
@@ -74,8 +77,8 @@ MonoBehaviour:
     - rid: 5642401357908934656
       type: {class: BlockData_Health, ns: , asm: Assembly-CSharp}
       data:
-        _currentHealth: 3250
-        _maxHealth: 3250
+        <CurrentHealth>k__BackingField: 3250
+        <MaxHealth>k__BackingField: 3250
     - rid: 5642401357908934657
       type: {class: BlockData_Index, ns: , asm: Assembly-CSharp}
     - rid: 5642401357908934658
@@ -89,6 +92,15 @@ MonoBehaviour:
       type: {class: BlockData_GameObject, ns: , asm: Assembly-CSharp}
       data:
         _connectedGameObj: {fileID: 5692121619196870337}
+    - rid: 5642401372736847956
+      type: {class: BlockData_ChangeSpriteOnHealthChange, ns: , asm: Assembly-CSharp}
+      data:
+        _spriteRenderer: {fileID: 94342062498210997}
+        _sprites:
+        - {fileID: -2034758586, guid: 3be814aced487eb4fa1cbbaf455c71f0, type: 3}
+        - {fileID: 2022099795, guid: 3be814aced487eb4fa1cbbaf455c71f0, type: 3}
+        _healthThresholdsToChangeSprite: []
+        _maxHealth: 0
 --- !u!50 &5215937188377587096
 Rigidbody2D:
   serializedVersion: 4

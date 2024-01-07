@@ -4,11 +4,11 @@ using UnityEngine.Events;
 [System.Serializable]
 public class BlockData_Health : GameEntityData_Base
 {
-    [SerializeField]
-    float _currentHealth;
+    [field: SerializeField]
+    public float CurrentHealth { get; private set; }
 
-    [SerializeField]
-    float _maxHealth;
+    [field: SerializeField]
+    public float MaxHealth { get; private set; }
 
     public UnityAction<float> OnHealthChange;
     public UnityAction<float> OnMaxHealthChange;
@@ -16,7 +16,7 @@ public class BlockData_Health : GameEntityData_Base
 
     public override bool TryInitialize(IGameEntity gameEntity)
     {
-        _currentHealth = _maxHealth;
+        CurrentHealth = MaxHealth;
         return true;
     }
 
@@ -24,13 +24,13 @@ public class BlockData_Health : GameEntityData_Base
     {
         float changedHealth = healthAmount;
 
-        if (!forceEventActivation && Mathf.Approximately(_currentHealth, changedHealth))
+        if (!forceEventActivation && Mathf.Approximately(CurrentHealth, changedHealth))
             return;
 
-        _currentHealth = changedHealth;
-        OnHealthChange?.Invoke(_currentHealth);
+        CurrentHealth = changedHealth;
+        OnHealthChange?.Invoke(CurrentHealth);
 
-        if (Mathf.Approximately(_currentHealth, 0f))
+        if (Mathf.Approximately(CurrentHealth, 0f))
         {
             OnHealthDeplete?.Invoke();
         }
@@ -40,21 +40,21 @@ public class BlockData_Health : GameEntityData_Base
     {
         float changedMaxHealth = maxHealthAmount;
 
-        if (!forceEventActivation && Mathf.Approximately(_currentHealth, changedMaxHealth))
+        if (!forceEventActivation && Mathf.Approximately(CurrentHealth, changedMaxHealth))
             return;
 
-        _maxHealth = changedMaxHealth;
-        OnMaxHealthChange?.Invoke(_maxHealth);
+        MaxHealth = changedMaxHealth;
+        OnMaxHealthChange?.Invoke(MaxHealth);
 
-        float changedHealth = Mathf.Clamp(_currentHealth, 0f, _maxHealth);
+        float changedHealth = Mathf.Clamp(CurrentHealth, 0f, MaxHealth);
 
-        if (!forceEventActivation && Mathf.Approximately(_currentHealth, changedHealth))
+        if (!forceEventActivation && Mathf.Approximately(CurrentHealth, changedHealth))
             return;
 
-        _currentHealth = changedHealth;
-        OnHealthChange?.Invoke(_currentHealth);
+        CurrentHealth = changedHealth;
+        OnHealthChange?.Invoke(CurrentHealth);
 
-        if (Mathf.Approximately(_currentHealth, 0f))
+        if (Mathf.Approximately(CurrentHealth, 0f))
         {
             OnHealthDeplete?.Invoke();
         }
@@ -62,15 +62,15 @@ public class BlockData_Health : GameEntityData_Base
 
     public void ChangeHealth(float changeAmount)
     {
-        float changedHealth = Mathf.Clamp(_currentHealth + changeAmount, 0f, _maxHealth);
+        float changedHealth = Mathf.Clamp(CurrentHealth + changeAmount, 0f, MaxHealth);
 
-        if (Mathf.Approximately(_currentHealth, changedHealth))
+        if (Mathf.Approximately(CurrentHealth, changedHealth))
             return;
 
-        _currentHealth = changedHealth;
-        OnHealthChange?.Invoke(_currentHealth);
+        CurrentHealth = changedHealth;
+        OnHealthChange?.Invoke(CurrentHealth);
 
-        if (Mathf.Approximately(_currentHealth, 0f))
+        if (Mathf.Approximately(CurrentHealth, 0f))
         {
             OnHealthDeplete?.Invoke();
         }
