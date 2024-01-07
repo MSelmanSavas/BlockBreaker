@@ -9,4 +9,15 @@ public abstract class GameEntityData_Base
     /// </summary>
     /// <returns></returns>
     public virtual bool TryInitialize(IGameEntity gameEntity) { return true; }
+
+    /// <summary>
+    /// Used for resetting data if necessary. Can be used for pooling.
+    /// </summary>
+    /// <param name="gameEntity"></param>
+    /// <returns></returns> <summary>
+    /// 
+    /// </summary>
+    /// <param name="gameEntity"></param>
+    /// <returns></returns>
+    public virtual bool OnReset(IGameEntity gameEntity) { return true; }
 }

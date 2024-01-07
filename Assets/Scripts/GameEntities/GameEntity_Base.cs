@@ -10,7 +10,7 @@ public class GameEntity_Base : MonoBehaviour, IGameEntity
     [SerializeField]
     EntityActionDictionary _entityActions = new();
 
-    protected virtual void Awake()
+    private void Awake()
     {
         foreach (var entityDataKV in _entityDatas)
         {
@@ -37,6 +37,57 @@ public class GameEntity_Base : MonoBehaviour, IGameEntity
                 Debug.LogError($"Error while initializing data on {gameObject.name}! Error : {e}");
             }
         }
+
+        AwakeExternal();
+    }
+
+    /// <summary>
+    /// Any class that inherits this should use this for Awake calls.
+    /// Used for preventing accidental overrides on Awake initialization.
+    /// </summary>
+    protected virtual void AwakeExternal()
+    {
+
+    }
+
+    private void OnDisable()
+    {
+        foreach (var entityDataKV in _entityDatas)
+        {
+            try
+            {
+                if (!entityDataKV.Value.OnReset(this))
+                    throw new System.Exception($"Cannot initialize data type : {entityDataKV.Key}!");
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"Error while initializing data on {gameObject.name}! Error : {e}");
+            }
+        }
+
+        foreach (var entityActionsKV in _entityActions)
+        {
+            try
+            {
+                if (!entityActionsKV.Value.OnReset(this))
+                    throw new System.Exception($"Cannot initialize data type : {entityActionsKV.Key}!");
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"Error while initializing data on {gameObject.name}! Error : {e}");
+            }
+        }
+        
+        OnDisableExternal();
+    }
+
+    /// <summary>
+    /// Any class that inherits this should use this for OnDisable calls.
+    /// Used for preventing accidental overrides on Awake initialization.
+    /// </summary>
+    protected virtual void OnDisableExternal()
+    {
+
     }
 
     public virtual bool OnLoad() { return true; }
@@ -60,7 +111,7 @@ public class GameEntity_Base : MonoBehaviour, IGameEntity
     public bool TryAddData<T>(T data) where T : GameEntityData_Base, new()
     {
         _entityDataTypeRefCache.Type = typeof(T);
-        
+
         if (_entityDatas.ContainsKey(typeof(T)))
             return false;
 
