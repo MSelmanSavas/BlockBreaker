@@ -114,6 +114,16 @@ public class GameFieldManager_Default : GameSystem_Base
             gameObjectData.GetGameObject().transform.SetParent(_gameFieldParent);
         }
 
+        if (gameEntity.TryGetOrAddGetData(out BlockData_GameFieldManager gameFieldManagerData))
+        {
+            gameFieldManagerData.SetAttachedGameFieldManager(this);
+        }
+
+        if (gameEntity.TryGetOrAddGetData(out BlockData_Index indexData))
+        {
+            indexData.SetIndices(new List<Vector2Int> { index });
+        }
+
         return true;
     }
 
@@ -154,7 +164,7 @@ public class GameFieldManager_Default : GameSystem_Base
         if (!CheckIndexExistance(index))
             return false;
 
-        if (_entities[index] != null)
+        if (_entities[index] == null)
             return false;
 
         return true;

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: DefaultPaddleStorage
   m_EditorClassIdentifier: 
   <PaddleOriginPosition>k__BackingField: {x: 0, y: -6, z: 0}
-  <PaddleMovementSpeed>k__BackingField: 5
+  <PaddleMovementSpeed>k__BackingField: 10
   <PositionChangeAffectStrengthToBall>k__BackingField: 30
   <PaddlePrefab>k__BackingField: {fileID: 629393392691741280, guid: 5dd7894b621a51f40b2a4158dbcb04ae, type: 3}

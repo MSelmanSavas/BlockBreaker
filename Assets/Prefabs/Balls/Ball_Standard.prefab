@@ -169,9 +169,12 @@ MonoBehaviour:
         PublicKeyToken=null
     - _typeString: EntityData_Rigidbody2D, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
+    - _typeString: BallData_DamageOnCollision, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
     valueData:
     - rid: 5642401372736847927
     - rid: 5642401372736847928
+    - rid: 5642401372736847932
   _entityActions:
     keyData: []
     valueData: []
@@ -186,6 +189,10 @@ MonoBehaviour:
       type: {class: EntityData_Rigidbody2D, ns: , asm: Assembly-CSharp}
       data:
         <Rigidbody2D>k__BackingField: {fileID: 4442452423108236302}
+    - rid: 5642401372736847932
+      type: {class: BallData_DamageOnCollision, ns: , asm: Assembly-CSharp}
+      data:
+        DamageAmount: 200
 --- !u!58 &2334436826273063740
 CircleCollider2D:
   m_ObjectHideFlags: 0

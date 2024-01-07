@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <BallOriginPositionOffset>k__BackingField: {x: 0, y: 0.35, z: 0}
   <BallLaunchAngleLimit>k__BackingField: 30
-  <BallSpeedLimit>k__BackingField: 5
+  <BallSpeedLimit>k__BackingField: 15
+  <BallDamageOnCollision>k__BackingField: 2000
   <BallPrefab>k__BackingField: {fileID: 3163009546014923374, guid: 0deff7ff9129f544ab4e41263cb5d322, type: 3}

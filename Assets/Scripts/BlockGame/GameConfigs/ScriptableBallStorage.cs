@@ -15,6 +15,10 @@ public class ScriptableBallStorage : ScriptableObject
     [field: SerializeField]
     public float BallSpeedLimit { get; private set; }
 
+    
+    [field: SerializeField]
+    public float BallDamageOnCollision { get; private set; }
+
     [field: SerializeField]
     public GameObject BallPrefab { get; private set; }
 }
