@@ -13,6 +13,9 @@ public class ScriptableBallStorage : ScriptableObject
     public float BallLaunchAngleLimit { get; private set; }
 
     [field: SerializeField]
+    public float BallSpeedLimit { get; private set; }
+
+    [field: SerializeField]
     public GameObject BallPrefab { get; private set; }
 }
 

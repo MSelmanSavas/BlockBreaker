@@ -3,7 +3,6 @@ using UnityEngine;
 public class GameEntity_Base : MonoBehaviour, IGameEntity
 {
     TypeReferenceInheritedFrom<GameEntityData_Base> _entityDataTypeRefCache = new();
-    TypeReferenceInheritedFrom<GameEntityAction_Base> _entityActionTypeRefCache = new();
 
     [SerializeField]
     EntityDataDictionary _entityDatas = new();

@@ -52,9 +52,12 @@ MonoBehaviour:
         PublicKeyToken=null
     - _typeString: EntityData_Rigidbody2D, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
+    - _typeString: EntityData_PositionChange, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
     valueData:
     - rid: 5642401372736847929
     - rid: 5642401372736847930
+    - rid: 5642401372736847931
   _entityActions:
     keyData: []
     valueData: []
@@ -69,6 +72,11 @@ MonoBehaviour:
       type: {class: EntityData_Rigidbody2D, ns: , asm: Assembly-CSharp}
       data:
         <Rigidbody2D>k__BackingField: {fileID: 2522675399147974674}
+    - rid: 5642401372736847931
+      type: {class: EntityData_PositionChange, ns: , asm: Assembly-CSharp}
+      data:
+        PreviousPosition: {x: 0, y: 0, z: 0}
+        CurrentPosition: {x: 0, y: 0, z: 0}
 --- !u!50 &2522675399147974674
 Rigidbody2D:
   serializedVersion: 4

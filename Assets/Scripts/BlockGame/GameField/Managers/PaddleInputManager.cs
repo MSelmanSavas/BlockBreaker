@@ -73,6 +73,8 @@ public class PaddleInputManager : GameSystem_Base
         //We can connect it to another system and trigger it with an event, but this is easier for now.
         CalculatePaddleMovementLimits(Paddle);
 
+        Vector3 previousPosition = Paddle.transform.position;
+
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             Paddle.transform.position += Vector3.left * _paddleMovementSpeed * gameSystemContext.DeltaTime;
@@ -89,5 +91,11 @@ public class PaddleInputManager : GameSystem_Base
             if (Paddle.transform.position.x > LeftRightPaddleMovementLimites.y)
                 Paddle.transform.position = Paddle.transform.position.WithX(LeftRightPaddleMovementLimites.y);
         }
+
+        if (Paddle.TryGetData(out EntityData_PositionChange positionChange))
+            {
+                positionChange.PreviousPosition = previousPosition;
+                positionChange.CurrentPosition = Paddle.transform.position;
+            }
     }
 }

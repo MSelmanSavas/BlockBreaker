@@ -6,6 +6,7 @@ public class BallLaunchSystem : GameSystem_Base
 {
     public Ball_Base Ball { get; private set; }
     float _ballLaunchAngleLimit = 0f;
+    float _ballSpeedLimit = 0f;
 
     public override bool TryInitialize(GameSystems gameSystems)
     {
@@ -22,6 +23,7 @@ public class BallLaunchSystem : GameSystem_Base
             return false;
 
         _ballLaunchAngleLimit = gameConfig.BallStorage.BallLaunchAngleLimit;
+        _ballSpeedLimit = gameConfig.BallStorage.BallSpeedLimit;
         Ball = paddleAndBallLoader.CreatedBall;
 
         return true;
@@ -41,7 +43,7 @@ public class BallLaunchSystem : GameSystem_Base
 
         launchVector = Quaternion.AngleAxis(randomAngle, Vector3.forward) * launchVector;
 
-        rigidbody2DData.Rigidbody2D.AddForce(launchVector * 15f, ForceMode2D.Impulse);
+        rigidbody2DData.Rigidbody2D.AddForce(launchVector * _ballSpeedLimit, ForceMode2D.Impulse);
 
         GameSystems.TryRemoveGameSystem(this);
     }
