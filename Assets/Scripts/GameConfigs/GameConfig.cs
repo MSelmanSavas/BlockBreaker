@@ -11,5 +11,8 @@ public class GameConfig : ScriptableObject
     public Vector2 GameFieldCenter { get; private set; }
 
     [field: SerializeField]
+    public ScriptableGamefieldBoundryStorage GamefieldBoundryStorage { get; private set; }
+
+    [field: SerializeField]
     public ScriptableBlocksStorage BlocksStorage { get; private set; }
 }
