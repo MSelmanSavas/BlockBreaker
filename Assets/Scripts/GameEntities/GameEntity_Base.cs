@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class GameEntity_Base : MonoBehaviour, IGameEntity
 {
+    TypeReferenceInheritedFrom<GameEntityData_Base> _entityDataTypeRefCache = new();
+    TypeReferenceInheritedFrom<GameEntityAction_Base> _entityActionTypeRefCache = new();
+
     [SerializeField]
     EntityDataDictionary _entityDatas = new();
 
@@ -40,10 +43,12 @@ public class GameEntity_Base : MonoBehaviour, IGameEntity
     public virtual bool OnLoad() { return true; }
     public virtual bool OnAfter() { return true; }
     public virtual bool OnSpawned() { return true; }
-    
-    public bool TryGetData<T>(out T data) where T : GameEntityData_Base
+
+    public bool TryGetData<T>(out T data) where T : GameEntityData_Base, new()
     {
-        if (!_entityDatas.TryGetValue(typeof(T), out GameEntityData_Base baseData))
+        _entityDataTypeRefCache.Type = typeof(T);
+
+        if (!_entityDatas.TryGetValue(_entityDataTypeRefCache, out GameEntityData_Base baseData))
         {
             data = null;
             return false;
@@ -53,28 +58,36 @@ public class GameEntity_Base : MonoBehaviour, IGameEntity
         return data != null;
     }
 
-    public bool TryAddData<T>(T data) where T : GameEntityData_Base
+    public bool TryAddData<T>(T data) where T : GameEntityData_Base, new()
     {
+        _entityDataTypeRefCache.Type = typeof(T);
+        
         if (_entityDatas.ContainsKey(typeof(T)))
+            return false;
+
+        if (!data.TryInitialize(this))
             return false;
 
         _entityDatas.Add(typeof(T), data);
         return true;
     }
 
-    public bool TryRemoveData<T>(T data) where T : GameEntityData_Base
+    public bool TryRemoveData<T>(T data) where T : GameEntityData_Base, new()
     {
-        if (!_entityDatas.ContainsKey(typeof(T)))
+        _entityDataTypeRefCache.Type = typeof(T);
+
+        if (!_entityDatas.ContainsKey(_entityDataTypeRefCache))
             return false;
 
-        return _entityDatas.Remove(typeof(T));
+        return _entityDatas.Remove(_entityDataTypeRefCache);
     }
 
-    public bool TryAddAndGetData<T>(out T data) where T : GameEntityData_Base
+    public bool TryGetOrAddGetData<T>(out T data) where T : GameEntityData_Base, new()
     {
         if (TryGetData(out data))
             return true;
 
+        data = new T();
         return TryAddData(data);
     }
 }

@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0342bc3f1ee038a4f8e63ab60d5ba20a, type: 3}
   m_Name: DefaultPaddleStorage
   m_EditorClassIdentifier: 
-  PaddleOriginPosition: {x: 0, y: -6, z: 0}
+  <PaddleOriginPosition>k__BackingField: {x: 0, y: -6, z: 0}
+  <PaddleMovementSpeed>k__BackingField: 5
   <PaddlePrefab>k__BackingField: {fileID: 629393392691741280, guid: 5dd7894b621a51f40b2a4158dbcb04ae, type: 3}

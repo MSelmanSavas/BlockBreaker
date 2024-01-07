@@ -22,7 +22,7 @@ public class GameLoader : MonoBehaviour
         gameSystems.TryAddGameSystemByType<GameFieldLoader_Random>();
         gameSystems.TryAddGameSystemByType<GameStateManager>();
         gameSystems.TryAddGameSystemByType<GameFieldPaddleAndBallLoader>();
-        gameSystems.TryAddGameSystemByType<GameInputManager>();
+        gameSystems.TryAddGameSystemByType<PaddleInputManager>();
 
         gameSystems.Initialize();
     }

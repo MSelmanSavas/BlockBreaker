@@ -7,8 +7,11 @@ using UnityEngine;
 public class ScriptablePaddleStorage : ScriptableObject
 {
     [field: SerializeField]
-    public Vector3 PaddleOriginPosition;
+    public Vector3 PaddleOriginPosition { get; private set; }
     
+    [field: SerializeField]
+    public float PaddleMovementSpeed { get; private set; }
+
     [field: SerializeField]
     public GameObject PaddlePrefab { get; private set; }
 }

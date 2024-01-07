@@ -15,11 +15,11 @@ public class GameFieldBoundryLoader : GameSystem_Base
 #endif
     Camera _mainCamera;
 
-    GameObject _borderParent;
-    GameObject _rightBorder;
-    GameObject _leftBorder;
-    GameObject _topBorder;
-    GameObject _downBorder;
+    public GameObject BorderParent { get; private set; }
+    public GameObject RightBorder { get; private set; }
+    public GameObject LeftBorder { get; private set; }
+    public GameObject TopBorder { get; private set; }
+    public GameObject DownBorder { get; private set; }
 
 
     public override bool TryInitialize(GameSystems gameSystems)
@@ -40,12 +40,12 @@ public class GameFieldBoundryLoader : GameSystem_Base
         _gamefieldBoundryStorage = gameConfig.GamefieldBoundryStorage;
         _mainCamera = Camera.main;
 
-        _borderParent = new GameObject()
+        BorderParent = new GameObject()
         {
             name = "GamefieldBorders",
         };
 
-        _borderParent.transform.position = Vector3.zero;
+        BorderParent.transform.position = Vector3.zero;
 
         AlignGamefieldBoundries(_gamefieldBoundryStorage);
         return true;
@@ -53,25 +53,25 @@ public class GameFieldBoundryLoader : GameSystem_Base
 
     void AlignGamefieldBoundries(ScriptableGamefieldBoundryStorage gamefieldBoundryStorage)
     {
-        _rightBorder = GameObject.Instantiate(gamefieldBoundryStorage.RightBoundryPrefab);
-        _rightBorder.transform.SetParent(_borderParent.transform);
+        RightBorder = GameObject.Instantiate(gamefieldBoundryStorage.RightBoundryPrefab);
+        RightBorder.transform.SetParent(BorderParent.transform);
 
-        SetRightBoundry(_rightBorder);
+        SetRightBoundry(RightBorder);
 
-        _leftBorder = GameObject.Instantiate(gamefieldBoundryStorage.LeftBoundryPrefab);
-        _leftBorder.transform.SetParent(_borderParent.transform);
+        LeftBorder = GameObject.Instantiate(gamefieldBoundryStorage.LeftBoundryPrefab);
+        LeftBorder.transform.SetParent(BorderParent.transform);
 
-        SetLeftBoundry(_leftBorder);
+        SetLeftBoundry(LeftBorder);
 
-        _topBorder = GameObject.Instantiate(gamefieldBoundryStorage.TopBoundryPrefab);
-        _topBorder.transform.SetParent(_borderParent.transform);
+        TopBorder = GameObject.Instantiate(gamefieldBoundryStorage.TopBoundryPrefab);
+        TopBorder.transform.SetParent(BorderParent.transform);
 
-        SetTopBoundry(_topBorder);
+        SetTopBoundry(TopBorder);
 
-        _downBorder = GameObject.Instantiate(gamefieldBoundryStorage.DownBoundryPrefab);
-        _downBorder.transform.SetParent(_borderParent.transform);
+        DownBorder = GameObject.Instantiate(gamefieldBoundryStorage.DownBoundryPrefab);
+        DownBorder.transform.SetParent(BorderParent.transform);
 
-        SetDownBoundry(_downBorder);
+        SetDownBoundry(DownBorder);
     }
 
     void SetRightBoundry(GameObject boundry)

@@ -107,7 +107,7 @@ public class GameFieldManager_Default : GameSystem_Base
 
         _entities[index] = gameEntity;
 
-        if (gameEntity.TryAddAndGetData(out BlockData_GameObject gameObjectData))
+        if (gameEntity.TryGetOrAddGetData(out BlockData_GameObject gameObjectData))
         {
             gameObjectData.GetGameObject().transform.SetParent(_gameFieldParent);
         }
