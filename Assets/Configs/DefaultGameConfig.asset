@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: DefaultGameConfig
   m_EditorClassIdentifier: 
   <GameFieldOffset>k__BackingField: {x: 0.5, y: 0}
-  <GameFieldCenter>k__BackingField: {x: 0, y: 5}
+  <GameFieldCenter>k__BackingField: {x: 0, y: 1}
   <GamefieldBoundryStorage>k__BackingField: {fileID: 11400000, guid: ad9ba730cbe32694e8a6c98e4bc7193f, type: 2}
   <BlocksStorage>k__BackingField: {fileID: 11400000, guid: c34e26f3af8928149958ba6f6ada240b, type: 2}

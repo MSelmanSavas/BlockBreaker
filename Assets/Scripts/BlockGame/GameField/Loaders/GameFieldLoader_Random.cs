@@ -41,7 +41,7 @@ public class GameFieldLoader_Random : GameSystem_Base
     //TODO : Remove position calculation from here and carry all of the position stuff to gamefield manager.
     void LoadLevelOnGameField(GameFieldManager_Default gameFieldManager, ScriptableBlocksStorage scriptableBlocksStorage)
     {
-        Vector2Int GameFieldSize = new Vector2Int(10, 20);
+        Vector2Int GameFieldSize = new Vector2Int(8, 10);
         _gameFieldManager.SetGameFieldSize(GameFieldSize);
 
         for (int y = 0; y < GameFieldSize.y; y++)
