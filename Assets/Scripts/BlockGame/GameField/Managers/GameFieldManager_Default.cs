@@ -48,7 +48,7 @@ public class GameFieldManager_Default : GameSystem_Base
         if (!base.TryInitialize(gameSystems))
             return false;
 
-        RefBook.Add(this);
+
         _entities.Clear();
 
         if (!RefBook.TryGet(out GameConfig gameConfig))
@@ -56,6 +56,8 @@ public class GameFieldManager_Default : GameSystem_Base
 
         if (gameConfig.BlocksStorage == null)
             return false;
+
+        RefBook.Add(this);
 
         _blockStorage = gameConfig.BlocksStorage;
 

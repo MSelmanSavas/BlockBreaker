@@ -7,7 +7,10 @@ using UnityEngine;
 public class ScriptableBallStorage : ScriptableObject
 {
     [field: SerializeField]
-    public Vector3 BallOriginPositionOffset;
+    public Vector3 BallOriginPositionOffset { get; private set; }
+
+    [field: SerializeField]
+    public float BallLaunchAngleLimit { get; private set; }
 
     [field: SerializeField]
     public GameObject BallPrefab { get; private set; }

@@ -1,5 +1,7 @@
 public abstract class GameSystem_Base
 {
+    public bool IsMarkedForRemoval = false;
+    
     [Sirenix.OdinInspector.ShowInInspector]
     public GameSystems GameSystems { get; protected set; }
 

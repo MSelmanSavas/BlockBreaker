@@ -17,12 +17,13 @@ public class GameLoader : MonoBehaviour
         };
 
         GameSystems gameSystems = gameSystemsObj.AddComponent<GameSystems>();
-        gameSystems.TryAddGameSystemByType<GameFieldBoundryLoader>();
-        gameSystems.TryAddGameSystemByType<GameFieldManager_Default>();
-        gameSystems.TryAddGameSystemByType<GameFieldLoader_Random>();
-        gameSystems.TryAddGameSystemByType<GameStateManager>();
-        gameSystems.TryAddGameSystemByType<GameFieldPaddleAndBallLoader>();
-        gameSystems.TryAddGameSystemByType<PaddleInputManager>();
+        gameSystems.TryAddGameSystemByType<GameFieldBoundryLoader>(autoInitialize: false);
+        gameSystems.TryAddGameSystemByType<GameFieldManager_Default>(autoInitialize: false);
+        gameSystems.TryAddGameSystemByType<GameFieldLoader_Random>(autoInitialize: false);
+        gameSystems.TryAddGameSystemByType<GameStateManager>(autoInitialize: false);
+        gameSystems.TryAddGameSystemByType<GameFieldPaddleAndBallLoader>(autoInitialize: false);
+        gameSystems.TryAddGameSystemByType<PaddleInputManager>(autoInitialize: false);
+        gameSystems.TryAddGameSystemByType<BallLaunchSystem>(autoInitialize: false);
 
         gameSystems.Initialize();
     }

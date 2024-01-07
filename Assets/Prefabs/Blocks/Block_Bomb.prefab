@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5692121619196870338}
   - component: {fileID: 5215937188377587096}
   - component: {fileID: 100077641489837338}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Block_Bomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: f858151f52f50e4449ff34a227e4926a, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -146,7 +146,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7762421308009094261}
   - component: {fileID: 94342062498210997}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BlockSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -229,7 +229,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4146670084547033167}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: VisualParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}

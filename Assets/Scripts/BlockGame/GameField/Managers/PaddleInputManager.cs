@@ -57,7 +57,7 @@ public class PaddleInputManager : GameSystem_Base
         if (!paddle.TryGetOrAddGetData(out EntityData_Collider2D colliderData))
             return;
 
-        Vector2 colliderSize = colliderData.Collider.bounds.extents;
+        Vector2 colliderSize = colliderData.Collider2D.bounds.extents;
 
         LeftRightPaddleMovementLimites = new()
         {

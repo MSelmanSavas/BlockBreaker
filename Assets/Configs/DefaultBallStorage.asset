@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b999937ba11d0d94494bca5aa63f21b5, type: 3}
   m_Name: DefaultBallStorage
   m_EditorClassIdentifier: 
-  BallOriginPositionOffset: {x: 0, y: 0.35, z: 0}
+  <BallOriginPositionOffset>k__BackingField: {x: 0, y: 0.35, z: 0}
+  <BallLaunchAngleLimit>k__BackingField: 30
   <BallPrefab>k__BackingField: {fileID: 3163009546014923374, guid: 0deff7ff9129f544ab4e41263cb5d322, type: 3}
