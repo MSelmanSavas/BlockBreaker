@@ -57,11 +57,14 @@ MonoBehaviour:
         PublicKeyToken=null
     - _typeString: BlockData_State, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
+    - _typeString: BlockData_GameObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
     valueData:
     - rid: 5642401357908934656
     - rid: 5642401357908934657
     - rid: 5642401357908934658
     - rid: 5642401357908934659
+    - rid: 5642401372736847872
   _entityActions:
     keyData: []
     valueData: []
@@ -82,6 +85,10 @@ MonoBehaviour:
       data:
         _previousBlockState: 0
         _blockState: 0
+    - rid: 5642401372736847872
+      type: {class: BlockData_GameObject, ns: , asm: Assembly-CSharp}
+      data:
+        _connectedGameObj: {fileID: 5692121619196870337}
 --- !u!50 &5215937188377587096
 Rigidbody2D:
   serializedVersion: 4

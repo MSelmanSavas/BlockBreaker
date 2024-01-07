@@ -17,6 +17,7 @@ public class GameLoader : MonoBehaviour
         };
 
         GameSystems gameSystems = gameSystemsObj.AddComponent<GameSystems>();
+        gameSystems.TryAddGameSystemByType<GameFieldBoundryLoader>();
         gameSystems.TryAddGameSystemByType<GameFieldManager_Default>();
         gameSystems.TryAddGameSystemByType<GameFieldLoader_Random>();
 

@@ -3,12 +3,39 @@ using UnityEngine;
 
 public class GameFieldManager_Default : GameSystem_Base
 {
+#if ODIN_INSPECTOR
+    [Sirenix.OdinInspector.ShowInInspector]
+#endif
     public Vector2Int GameFieldSize { get; private set; }
+
+#if ODIN_INSPECTOR
+    [Sirenix.OdinInspector.ShowInInspector]
+#endif
     public Vector2 GameFieldOrigin { get; private set; }
+
+#if ODIN_INSPECTOR
+    [Sirenix.OdinInspector.ShowInInspector]
+#endif
     public Vector2 GameFieldCenter { get; private set; }
+
+#if ODIN_INSPECTOR
+    [Sirenix.OdinInspector.ShowInInspector]
+#endif
     public Vector2 GameFieldOffset { get; private set; }
+
+#if ODIN_INSPECTOR
+    [Sirenix.OdinInspector.ShowInInspector]
+#endif
     public Vector2 GameFieldCellSize { get; private set; }
+
+#if ODIN_INSPECTOR
+    [Sirenix.OdinInspector.ShowInInspector]
+#endif
     Transform _gameFieldParent;
+
+#if ODIN_INSPECTOR
+    [Sirenix.OdinInspector.ShowInInspector]
+#endif
     Dictionary<Vector2Int, IGameEntity> _entities = new();
 
 #if ODIN_INSPECTOR
@@ -79,6 +106,12 @@ public class GameFieldManager_Default : GameSystem_Base
             _entities.Add(index, null);
 
         _entities[index] = gameEntity;
+
+        if (gameEntity.TryAddAndGetData(out BlockData_GameObject gameObjectData))
+        {
+            gameObjectData.GetGameObject().transform.SetParent(_gameFieldParent);
+        }
+
         return true;
     }
 
@@ -117,11 +150,11 @@ public class GameFieldManager_Default : GameSystem_Base
     private bool CheckEntityExistance(Vector2Int index)
     {
         if (!CheckIndexExistance(index))
-            return true;
+            return false;
 
-        if (_entities[index] == null)
-            return true;
+        if (_entities[index] != null)
+            return false;
 
-        return false;
+        return true;
     }
 }
