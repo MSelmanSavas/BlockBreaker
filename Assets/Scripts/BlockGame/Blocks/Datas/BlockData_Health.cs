@@ -10,6 +10,9 @@ public class BlockData_Health : GameEntityData_Base
     [field: SerializeField]
     public float MaxHealth { get; private set; }
 
+    [field: SerializeField]
+    public bool IsAlreadyDead { get; private set; }
+
     public UnityAction<float> OnHealthChange;
     public UnityAction<float> OnMaxHealthChange;
     public UnityAction OnHealthDeplete;
@@ -56,12 +59,16 @@ public class BlockData_Health : GameEntityData_Base
 
         if (Mathf.Approximately(CurrentHealth, 0f))
         {
+            IsAlreadyDead = true;
             OnHealthDeplete?.Invoke();
         }
     }
 
     public void ChangeHealth(float changeAmount)
     {
+        if (IsAlreadyDead)
+            return;
+
         float changedHealth = Mathf.Clamp(CurrentHealth + changeAmount, 0f, MaxHealth);
 
         if (Mathf.Approximately(CurrentHealth, changedHealth))
@@ -72,6 +79,7 @@ public class BlockData_Health : GameEntityData_Base
 
         if (Mathf.Approximately(CurrentHealth, 0f))
         {
+            IsAlreadyDead = true;
             OnHealthDeplete?.Invoke();
         }
     }
