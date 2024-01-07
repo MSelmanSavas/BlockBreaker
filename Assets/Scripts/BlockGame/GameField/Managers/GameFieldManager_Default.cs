@@ -98,10 +98,7 @@ public class GameFieldManager_Default : GameSystem_Base
     public bool TryAddGameEntity(Vector2Int index, IGameEntity gameEntity)
     {
         if (CheckEntityExistance(index))
-        {
-            Logger.LogErrorWithTag(LogCategory.GameField, $"There is already another entity on index : {index} on gamefield manager : {GetType()}! Cannot add entity : {gameEntity}...");
             return false;
-        }
 
         //TODO : Might introduce bug for assigning instead of adding. Should check if any bad thing happens here!
         if (!CheckIndexExistance(index))
@@ -130,16 +127,10 @@ public class GameFieldManager_Default : GameSystem_Base
     public bool TryRemoveGameEntity(Vector2Int index)
     {
         if (!CheckIndexExistance(index))
-        {
-            Logger.LogErrorWithTag(LogCategory.GameField, $"There is no index : {index} on gamefield manager : {GetType()}! Cannot remove entity...");
             return false;
-        }
 
         if (!CheckEntityExistance(index))
-        {
-            Logger.LogErrorWithTag(LogCategory.GameField, $"There is no entity on index : {index} on gamefield manager : {GetType()}! Cannot remove entity...");
             return false;
-        }
 
         return _entities.Remove(index);
     }
@@ -148,7 +139,6 @@ public class GameFieldManager_Default : GameSystem_Base
     {
         if (!CheckEntityExistance(index))
         {
-            Logger.LogErrorWithTag(LogCategory.GameField, $"There is no entity on index : {index} on gamefield manager : {GetType()}! Cannot get entity...");
             gameEntity = null;
             return false;
         }
