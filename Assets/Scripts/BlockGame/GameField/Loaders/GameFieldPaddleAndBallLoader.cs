@@ -36,12 +36,26 @@ public class GameFieldPaddleAndBallLoader : GameSystem_Base
         return true;
     }
 
+    public override bool TryDeInitialize(GameSystems gameSystems)
+    {
+        if (!base.TryDeInitialize(gameSystems))
+            return false;
+
+        if (CreatedPaddle != null)
+            GameObject.Destroy(CreatedPaddle.gameObject);
+
+        if (CreatedBall != null)
+            GameObject.Destroy(CreatedBall.gameObject);
+
+        return true;
+    }
+
     void CreatePaddle(ScriptablePaddleStorage paddleStorage)
     {
         GameObject paddleObject = GameObject.Instantiate(paddleStorage.PaddlePrefab, Vector3.zero, Quaternion.identity, null);
         CreatedPaddle = paddleObject.GetComponent<Paddle_Base>();
         SetPaddlePositionToOrigin(CreatedPaddle, paddleStorage);
-        
+
         CreatedPaddle.OnSpawned();
         CreatedPaddle.OnLoad();
         CreatedPaddle.OnAfterLoad();

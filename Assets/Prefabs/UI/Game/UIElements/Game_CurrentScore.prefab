@@ -148,3 +148,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52290cf54a68763438b0051d80f73311, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _scoreText: {fileID: 6588169077294980137}
+  _scoreTextPrefix: 'Score : '

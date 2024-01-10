@@ -47,14 +47,14 @@ public class PaddleInputManager : GameSystem_Base
         return true;
     }
 
-    public override bool TryUnInitialize(GameSystems gameSystems)
+    public override bool TryDeInitialize(GameSystems gameSystems)
     {
         if (gameSystems.TryGetGameSystemByType(out GameStateManager gameStateManager))
         {
             gameStateManager.OnGameStateChange -= OnGameStateChange;
         }
 
-        return base.TryUnInitialize(gameSystems);
+        return base.TryDeInitialize(gameSystems);
     }
 
     void CalculateLeftRightLimits(GameFieldBoundryLoader boundryLoader)

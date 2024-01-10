@@ -39,13 +39,16 @@ public class GameLoader : MonoBehaviour
 
         gameSystems.Initialize();
 
-
         if (gameSystems.TryGetGameSystemByType(out GameStateManager gameStateManager))
             gameStateManager.TrySetGameState(GameState.CanStart);
     }
 
     public void DeInitializeGameLoop()
     {
-
+        if (RefBook.TryGet(out GameSystems gameSystems))
+        {
+            gameSystems.DeInitialize();
+            Destroy(gameSystems.gameObject);
+        }
     }
 }

@@ -16,14 +16,15 @@ public class GameScoreSystem : GameSystem_Base
             return false;
 
         RefBook.Add(this);
+        
         CurrentScore = 0f;
         OnCurrentScoreChange?.Invoke(CurrentScore, CurrentScore);
         return true;
     }
 
-    public override bool TryUnInitialize(GameSystems gameSystems)
+    public override bool TryDeInitialize(GameSystems gameSystems)
     {
-        if (!base.TryUnInitialize(gameSystems))
+        if (!base.TryDeInitialize(gameSystems))
             return false;
 
         RefBook.Remove(this);

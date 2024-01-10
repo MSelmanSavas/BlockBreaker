@@ -15,12 +15,27 @@ public class GameplayVariablesSystem : GameSystem_Base
 
     public override bool TryInitialize(GameSystems gameSystems)
     {
+        if (!base.TryInitialize(gameSystems))
+            return false;
+
         CurrentLife = MaxLife;
 
         OnMaxLifeChange?.Invoke(MaxLife);
         OnCurrentLifeChange?.Invoke(CurrentLife, MaxLife);
 
-        return base.TryInitialize(gameSystems);
+        RefBook.Add(this);
+
+        return true;
+    }
+
+    public override bool TryDeInitialize(GameSystems gameSystems)
+    {
+        if (!base.TryDeInitialize(gameSystems))
+            return false;
+
+        RefBook.Remove(this);
+
+        return true;
     }
 
     public void ChangeCurrentLife(int amount)

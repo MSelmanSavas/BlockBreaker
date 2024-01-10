@@ -51,6 +51,20 @@ public class GameFieldBoundryLoader : GameSystem_Base
         return true;
     }
 
+    public override bool TryDeInitialize(GameSystems gameSystems)
+    {
+        if (!base.TryDeInitialize(gameSystems))
+            return false;
+
+        GameObject.Destroy(BorderParent);
+        GameObject.Destroy(RightBorder);
+        GameObject.Destroy(LeftBorder);
+        GameObject.Destroy(TopBorder);
+        GameObject.Destroy(DownBorder);
+        
+        return true;
+    }
+
     void AlignGamefieldBoundries(ScriptableGamefieldBoundryStorage gamefieldBoundryStorage)
     {
         RightBorder = GameObject.Instantiate(gamefieldBoundryStorage.RightBoundryPrefab);

@@ -6,10 +6,17 @@ public class Paddle_Standard : Paddle_Base
     ScriptablePaddleStorage _paddleStorage;
     float _contactPointStrengthToAffectBallTrajectory = 10f;
 
-    private void Start()
+    public override bool OnSpawned()
     {
-        if (RefBook.TryGet(out GameConfig gameConfig))
-            _paddleStorage = gameConfig.PaddleStorage;
+        if (!base.OnSpawned())
+            return false;
+
+        if (!RefBook.TryGet(out GameConfig gameConfig))
+            return false;
+
+        _paddleStorage = gameConfig.PaddleStorage;
+
+        return true;
     }
 
     private void OnCollisionEnter2D(Collision2D other)

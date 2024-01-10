@@ -150,3 +150,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b58f18c1d7ef4a4c91b670d86fb02a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _lifeText: {fileID: 5774668296247864439}
+  _lifeTextPrefix: 'Life : '

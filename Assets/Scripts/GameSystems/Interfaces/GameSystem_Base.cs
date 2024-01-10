@@ -11,7 +11,7 @@ public abstract class GameSystem_Base
         return true;
     }
 
-    public virtual bool TryUnInitialize(GameSystems gameSystems)
+    public virtual bool TryDeInitialize(GameSystems gameSystems)
     {
         return true;
     }

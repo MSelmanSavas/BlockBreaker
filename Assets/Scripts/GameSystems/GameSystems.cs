@@ -54,7 +54,7 @@ public class GameSystems : MonoBehaviour
         {
             if (!system.TryInitialize(this))
             {
-                Logger.LogErrorWithTag(LogCategory.GameSystems, $"Error while trying to initialize system : {system}! Cannot continue initializing game systems!");
+                Logger.LogErrorWithTag(LogCategory.GameSystems, $"Error while trying to initialize system : {system}! Cannot continue initializing update game systems!");
                 return false;
             }
         }
@@ -63,10 +63,49 @@ public class GameSystems : MonoBehaviour
         {
             if (!system.TryInitialize(this))
             {
-                Logger.LogErrorWithTag(LogCategory.GameSystems, $"Error while trying to initialize late update system : {system}! Cannot continue initializing game systems!");
+                Logger.LogErrorWithTag(LogCategory.GameSystems, $"Error while trying to initialize late update system : {system}! Cannot continue initializing late update game systems!");
                 return false;
             }
         }
+
+        return true;
+    }
+
+    public void DeInitialize()
+    {
+        DeInitializeSystems();
+    }
+
+    private bool DeInitializeSystems()
+    {
+        foreach (var system in _updateGameSystems)
+        {
+            if (!system.TryDeInitialize(this))
+            {
+                Logger.LogErrorWithTag(LogCategory.GameSystems, $"Error while trying to deinitialize system : {system}! Cannot continue deinitializing update game systems!");
+                return false;
+            }
+        }
+
+        _updateGameSystems.Clear();
+
+
+        foreach (var system in _lateUpdateGameSystems)
+        {
+            if (!system.TryDeInitialize(this))
+            {
+                Logger.LogErrorWithTag(LogCategory.GameSystems, $"Error while trying to deinitialize late update system : {system}! Cannot continue deinitializing late update game systems!");
+                return false;
+            }
+        }
+
+        _lateUpdateGameSystems.Clear();
+
+        _updateSystemsToBeAdded.Clear();
+        _lateUpdateSystemsToBeAdded.Clear();
+
+        _updateSystemsToBeRemoved.Clear();
+        _lateUpdateSystemsToBeRemoved.Clear();
 
         return true;
     }

@@ -48,7 +48,6 @@ public class GameFieldManager_Default : GameSystem_Base
         if (!base.TryInitialize(gameSystems))
             return false;
 
-
         _entities.Clear();
 
         if (!RefBook.TryGet(out GameConfig gameConfig))
@@ -70,6 +69,29 @@ public class GameFieldManager_Default : GameSystem_Base
         {
             name = "GameFieldParent"
         }.transform;
+
+        return true;
+    }
+
+    public override bool TryDeInitialize(GameSystems gameSystems)
+    {
+        if (!base.TryDeInitialize(gameSystems))
+            return false;
+
+        foreach (var entity in _entities)
+        {
+            if (entity.Value == null)
+                continue;
+
+            if (!entity.Value.TryGetData(out BlockData_GameObject gameObjectData))
+                continue;
+
+            GameObject.Destroy(gameObjectData.GetGameObject());
+        }
+
+        _entities.Clear();
+
+        GameObject.Destroy(_gameFieldParent.gameObject);
 
         return true;
     }

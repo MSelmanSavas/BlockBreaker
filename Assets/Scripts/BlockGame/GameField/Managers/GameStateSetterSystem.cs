@@ -25,14 +25,14 @@ public class GameStateSetterSystem : GameSystem_Base
         return true;
     }
 
-    public override bool TryUnInitialize(GameSystems gameSystems)
+    public override bool TryDeInitialize(GameSystems gameSystems)
     {
         if (GameSystems.TryGetGameSystemByType(out _gameplayVariablesSystem))
         {
             _gameplayVariablesSystem.OnCurrentLifeReachesZero -= OnCurrentLifeReachesZeroChange;
         }
 
-        return base.TryUnInitialize(gameSystems);
+        return base.TryDeInitialize(gameSystems);
     }
 
     public override void Update(RuntimeGameSystemContext gameSystemContext)
