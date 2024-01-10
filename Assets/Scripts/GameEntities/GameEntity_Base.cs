@@ -91,7 +91,7 @@ public class GameEntity_Base : MonoBehaviour, IGameEntity
     }
 
     public virtual bool OnLoad() { return true; }
-    public virtual bool OnAfter() { return true; }
+    public virtual bool OnAfterLoad() { return true; }
     public virtual bool OnSpawned() { return true; }
 
     public bool TryGetData<T>(out T data) where T : GameEntityData_Base, new()

@@ -26,6 +26,9 @@ public class GameSystems : MonoBehaviour
 #endif
     List<GameSystem_Base> _lateUpdateGameSystems = new();
 
+    List<GameSystem_Base> _updateSystemsToBeAdded = new();
+    List<GameSystem_Base> _lateUpdateSystemsToBeAdded = new();
+
     List<GameSystem_Base> _updateSystemsToBeRemoved = new();
     List<GameSystem_Base> _lateUpdateSystemsToBeRemoved = new();
 
@@ -68,7 +71,7 @@ public class GameSystems : MonoBehaviour
         return true;
     }
 
-    public bool TryAddGameSystem(GameSystem_Base gameSystem, bool autoInitialize = true)
+    public bool TryAddGameSystemImmediately(GameSystem_Base gameSystem, bool autoInitialize = true)
     {
         if (gameSystem.IsMarkedForRemoval)
             return false;
@@ -81,6 +84,25 @@ public class GameSystems : MonoBehaviour
         return true;
     }
 
+    public bool TryAddGameSystemByTypeImmediately<T>(bool autoInitialize = true) where T : GameSystem_Base
+    {
+        GameSystem_Base gameSystem = Activator.CreateInstance(typeof(T)) as GameSystem_Base;
+        return TryAddGameSystemImmediately(gameSystem, autoInitialize);
+    }
+
+    public bool TryAddGameSystem(GameSystem_Base gameSystem, bool autoInitialize = true)
+    {
+        if (gameSystem.IsMarkedForRemoval)
+            return false;
+
+        if (autoInitialize)
+            if (!gameSystem.TryInitialize(this))
+                return false;
+
+        _updateSystemsToBeAdded.Add(gameSystem);
+        return true;
+    }
+
     public bool TryAddGameSystemByType<T>(bool autoInitialize = true) where T : GameSystem_Base
     {
         GameSystem_Base gameSystem = Activator.CreateInstance(typeof(T)) as GameSystem_Base;
@@ -89,7 +111,7 @@ public class GameSystems : MonoBehaviour
 
     public bool TryGetGameSystemByType<T>(out T gameSystem) where T : GameSystem_Base
     {
-        GameSystem_Base foundGameSystem = _updateGameSystems.Where(x => x.GetType() == typeof(T)).First();
+        GameSystem_Base foundGameSystem = _updateGameSystems.Where(x => x.GetType() == typeof(T)).FirstOrDefault();
 
         if (foundGameSystem == null)
         {
@@ -141,7 +163,7 @@ public class GameSystems : MonoBehaviour
         return true;
     }
 
-    public bool TryAddLateUpdateGameSystem(GameSystem_Base gameSystem, bool autoInitialize = true)
+    public bool TryAddLateUpdateGameSystemImmediately(GameSystem_Base gameSystem, bool autoInitialize = true)
     {
         if (gameSystem.IsMarkedForRemoval)
             return false;
@@ -151,6 +173,25 @@ public class GameSystems : MonoBehaviour
                 return false;
 
         _lateUpdateGameSystems.Add(gameSystem);
+        return true;
+    }
+
+    public bool TryAddLateUpdateGameSystemByTypeImmediately<T>(bool autoInitialize = true) where T : GameSystem_Base
+    {
+        GameSystem_Base gameSystem = Activator.CreateInstance(typeof(T)) as GameSystem_Base;
+        return TryAddLateUpdateGameSystemImmediately(gameSystem, autoInitialize);
+    }
+
+    public bool TryAddLateUpdateGameSystem(GameSystem_Base gameSystem, bool autoInitialize = true)
+    {
+        if (gameSystem.IsMarkedForRemoval)
+            return false;
+
+        if (autoInitialize)
+            if (!gameSystem.TryInitialize(this))
+                return false;
+
+        _lateUpdateSystemsToBeAdded.Add(gameSystem);
         return true;
     }
 
@@ -214,6 +255,18 @@ public class GameSystems : MonoBehaviour
         return true;
     }
 
+    void AddToBeAddedGameSystems()
+    {
+        foreach (var system in _updateSystemsToBeAdded)
+            _updateGameSystems.Add(system);
+
+        foreach (var system in _lateUpdateSystemsToBeAdded)
+            _lateUpdateGameSystems.Add(system);
+
+        _updateSystemsToBeAdded.Clear();
+        _lateUpdateSystemsToBeAdded.Clear();
+    }
+
     void RemoveToBeRemovedGameSystems()
     {
         foreach (var system in _updateSystemsToBeRemoved)
@@ -254,5 +307,6 @@ public class GameSystems : MonoBehaviour
         }
 
         RemoveToBeRemovedGameSystems();
+        AddToBeAddedGameSystems();
     }
 }

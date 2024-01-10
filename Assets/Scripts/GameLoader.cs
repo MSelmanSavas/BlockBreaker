@@ -17,14 +17,20 @@ public class GameLoader : MonoBehaviour
         };
 
         GameSystems gameSystems = gameSystemsObj.AddComponent<GameSystems>();
-        gameSystems.TryAddGameSystemByType<GameFieldBoundryLoader>(autoInitialize: false);
-        gameSystems.TryAddGameSystemByType<GameFieldManager_Default>(autoInitialize: false);
-        gameSystems.TryAddGameSystemByType<GameFieldLoader_Random>(autoInitialize: false);
-        gameSystems.TryAddGameSystemByType<GameStateManager>(autoInitialize: false);
-        gameSystems.TryAddGameSystemByType<GameFieldPaddleAndBallLoader>(autoInitialize: false);
-        gameSystems.TryAddGameSystemByType<PaddleInputManager>(autoInitialize: false);
-        gameSystems.TryAddGameSystemByType<BallLaunchSystem>(autoInitialize: false);
+        gameSystems.TryAddGameSystemByTypeImmediately<GameplayVariablesSystem>(autoInitialize: false);
+        gameSystems.TryAddGameSystemByTypeImmediately<GameFieldBoundryLoader>(autoInitialize: false);
+        gameSystems.TryAddGameSystemByTypeImmediately<GameFieldManager_Default>(autoInitialize: false);
+        gameSystems.TryAddGameSystemByTypeImmediately<GameFieldLoader_Random>(autoInitialize: false);
+        gameSystems.TryAddGameSystemByTypeImmediately<GameStateManager>(autoInitialize: false);
+        gameSystems.TryAddGameSystemByTypeImmediately<GameFieldPaddleAndBallLoader>(autoInitialize: false);
+        gameSystems.TryAddGameSystemByTypeImmediately<PaddleInputManager>(autoInitialize: false);
+        gameSystems.TryAddGameSystemByTypeImmediately<BallLaunchSystem>(autoInitialize: false);
+        gameSystems.TryAddGameSystemByTypeImmediately<GameStateSetterSystem>(autoInitialize: false);
 
         gameSystems.Initialize();
+
+
+        if (gameSystems.TryGetGameSystemByType(out GameStateManager gameStateManager))
+            gameStateManager.TrySetGameState(GameState.CanStart);
     }
 }

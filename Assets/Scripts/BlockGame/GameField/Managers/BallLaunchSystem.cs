@@ -7,6 +7,8 @@ public class BallLaunchSystem : GameSystem_Base
     public Ball_Base Ball { get; private set; }
     float _ballLaunchAngleLimit = 0f;
     float _ballSpeedLimit = 0f;
+    bool _isInputActive = false;
+    GameStateManager _gameStateManager;
 
     public override bool TryInitialize(GameSystems gameSystems)
     {
@@ -15,6 +17,13 @@ public class BallLaunchSystem : GameSystem_Base
 
         if (!gameSystems.TryGetGameSystemByType(out GameFieldPaddleAndBallLoader paddleAndBallLoader))
             return false;
+
+        if (gameSystems.TryGetGameSystemByType(out _gameStateManager))
+        {
+            _gameStateManager.OnGameStateChange += OnGameStateChange;
+
+            OnGameStateChange(_gameStateManager.CurrentGameState, _gameStateManager.CurrentGameState);
+        }
 
         if (!RefBook.TryGet(out GameConfig gameConfig))
             return false;
@@ -29,8 +38,26 @@ public class BallLaunchSystem : GameSystem_Base
         return true;
     }
 
+    public override bool TryUnInitialize(GameSystems gameSystems)
+    {
+        if (gameSystems.TryGetGameSystemByType(out _gameStateManager))
+        {
+            _gameStateManager.OnGameStateChange -= OnGameStateChange;
+        }
+
+        return base.TryUnInitialize(gameSystems);
+    }
+
+    void OnGameStateChange(GameState previousGameState, GameState currentGameState)
+    {
+        _isInputActive = currentGameState == GameState.CanStart;
+    }
+
     public override void Update(RuntimeGameSystemContext gameSystemContext)
     {
+        if (!_isInputActive)
+            return;
+
         if (!Input.GetKeyDown(KeyCode.Space))
             return;
 
@@ -45,6 +72,7 @@ public class BallLaunchSystem : GameSystem_Base
 
         rigidbody2DData.Rigidbody2D.AddForce(launchVector * _ballSpeedLimit, ForceMode2D.Impulse);
 
+        _gameStateManager.TrySetGameState(GameState.Playing);
         GameSystems.TryRemoveGameSystem(this);
     }
 }

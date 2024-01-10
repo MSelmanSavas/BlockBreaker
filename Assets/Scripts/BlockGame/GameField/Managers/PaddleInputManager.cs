@@ -11,6 +11,7 @@ public class PaddleInputManager : GameSystem_Base
     public Vector2 LeftRightPaddleMovementLimites { get; private set; }
     GameFieldBoundryLoader _boundryLoader;
     float _paddleMovementSpeed;
+    bool _isInputActive = false;
 
     public override bool TryInitialize(GameSystems gameSystems)
     {
@@ -19,6 +20,11 @@ public class PaddleInputManager : GameSystem_Base
 
         if (!gameSystems.TryGetGameSystemByType(out _boundryLoader))
             return false;
+
+        if (gameSystems.TryGetGameSystemByType(out GameStateManager gameStateManager))
+        {
+            gameStateManager.OnGameStateChange += OnGameStateChange;
+        }
 
         if (!gameSystems.TryGetGameSystemByType(out GameFieldPaddleAndBallLoader paddleAndBallLoader))
             return false;
@@ -29,6 +35,7 @@ public class PaddleInputManager : GameSystem_Base
         if (gameConfig.PaddleStorage == null)
             return false;
 
+
         Paddle = paddleAndBallLoader.CreatedPaddle;
         Ball = paddleAndBallLoader.CreatedBall;
 
@@ -38,6 +45,16 @@ public class PaddleInputManager : GameSystem_Base
         CalculatePaddleMovementLimits(Paddle);
 
         return true;
+    }
+
+    public override bool TryUnInitialize(GameSystems gameSystems)
+    {
+        if (gameSystems.TryGetGameSystemByType(out GameStateManager gameStateManager))
+        {
+            gameStateManager.OnGameStateChange -= OnGameStateChange;
+        }
+
+        return base.TryUnInitialize(gameSystems);
     }
 
     void CalculateLeftRightLimits(GameFieldBoundryLoader boundryLoader)
@@ -66,8 +83,16 @@ public class PaddleInputManager : GameSystem_Base
         };
     }
 
+    void OnGameStateChange(GameState previousGameState, GameState currentGameState)
+    {
+        _isInputActive = currentGameState == GameState.Playing;
+    }
+
     public override void Update(RuntimeGameSystemContext gameSystemContext)
     {
+        if (!_isInputActive)
+            return;
+
         //Calculating paddle movement limits for each frame
         //If paddle resizes, we need to calculate limits based on the size of the paddle every frame.
         //We can connect it to another system and trigger it with an event, but this is easier for now.
@@ -93,9 +118,9 @@ public class PaddleInputManager : GameSystem_Base
         }
 
         if (Paddle.TryGetData(out EntityData_PositionChange positionChange))
-            {
-                positionChange.PreviousPosition = previousPosition;
-                positionChange.CurrentPosition = Paddle.transform.position;
-            }
+        {
+            positionChange.PreviousPosition = previousPosition;
+            positionChange.CurrentPosition = Paddle.transform.position;
+        }
     }
 }

@@ -31,23 +31,56 @@ public class GameFieldPaddleAndBallLoader : GameSystem_Base
         _ballStorage = gameConfig.BallStorage;
 
         CreatePaddle(_paddleStorage);
-        CreateBall(_ballStorage);
+        CreateBall(_paddleStorage, _ballStorage);
 
         return true;
     }
 
     void CreatePaddle(ScriptablePaddleStorage paddleStorage)
     {
-        PaddleOriginPosition = paddleStorage.PaddleOriginPosition;
-        GameObject paddleObject = GameObject.Instantiate(paddleStorage.PaddlePrefab, PaddleOriginPosition, quaternion.identity, null);
+        GameObject paddleObject = GameObject.Instantiate(paddleStorage.PaddlePrefab, Vector3.zero, Quaternion.identity, null);
         CreatedPaddle = paddleObject.GetComponent<Paddle_Base>();
+        SetPaddlePositionToOrigin(CreatedPaddle, paddleStorage);
     }
 
-    void CreateBall(ScriptableBallStorage ballStorage)
+    void SetPaddlePositionToOrigin(Paddle_Base paddleBase, ScriptablePaddleStorage paddleStorage)
     {
-        BallOriginPositionOffset = ballStorage.BallOriginPositionOffset;
+        if (paddleBase == null)
+            return;
 
-        GameObject ballObject = GameObject.Instantiate(ballStorage.BallPrefab, PaddleOriginPosition + BallOriginPositionOffset, quaternion.identity, null);
+        PaddleOriginPosition = paddleStorage.PaddleOriginPosition;
+        paddleBase.transform.position = PaddleOriginPosition;
+    }
+
+    void CreateBall(ScriptablePaddleStorage paddleStorage, ScriptableBallStorage ballStorage)
+    {
+        GameObject ballObject = GameObject.Instantiate(ballStorage.BallPrefab, Vector3.zero, Quaternion.identity, null);
         CreatedBall = ballObject.GetComponent<Ball_Base>();
+        SetBallPositionToOrigin(CreatedBall, paddleStorage, ballStorage);
+    }
+
+    void SetBallPositionToOrigin(Ball_Base ballBase, ScriptablePaddleStorage paddleStorage, ScriptableBallStorage ballStorage)
+    {
+        if (ballBase == null)
+            return;
+
+        BallOriginPositionOffset = ballStorage.BallOriginPositionOffset;
+        Vector3 paddleOriginPosition = paddleStorage.PaddleOriginPosition;
+        ballBase.transform.position = paddleOriginPosition + BallOriginPositionOffset;
+    }
+
+    public void ResetPaddleAndBall()
+    {
+        if (CreatedPaddle == null)
+            CreatePaddle(_paddleStorage);
+
+        if (CreatedBall == null)
+            CreateBall(_paddleStorage, _ballStorage);
+
+        SetPaddlePositionToOrigin(CreatedPaddle, _paddleStorage);
+        SetBallPositionToOrigin(CreatedBall, _paddleStorage, _ballStorage);
+
+        CreatedBall.OnLoad();
+        CreatedPaddle.OnLoad();
     }
 }
