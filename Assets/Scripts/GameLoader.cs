@@ -7,10 +7,19 @@ public class GameLoader : MonoBehaviour
     [SerializeField]
     GameConfig GameConfig;
 
-    private void Start()
+    private void OnEnable()
     {
         RefBook.Add(GameConfig);
+        RefBook.Add(this);
+    }
 
+    private void OnDisable()
+    {
+        RefBook.Remove(this);
+    }
+
+    public void InitializeGameLoop()
+    {
         GameObject gameSystemsObj = new GameObject
         {
             name = "GameSystems"
@@ -33,5 +42,10 @@ public class GameLoader : MonoBehaviour
 
         if (gameSystems.TryGetGameSystemByType(out GameStateManager gameStateManager))
             gameStateManager.TrySetGameState(GameState.CanStart);
+    }
+
+    public void DeInitializeGameLoop()
+    {
+
     }
 }
