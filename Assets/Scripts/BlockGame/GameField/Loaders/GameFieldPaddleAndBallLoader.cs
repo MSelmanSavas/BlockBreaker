@@ -41,6 +41,10 @@ public class GameFieldPaddleAndBallLoader : GameSystem_Base
         GameObject paddleObject = GameObject.Instantiate(paddleStorage.PaddlePrefab, Vector3.zero, Quaternion.identity, null);
         CreatedPaddle = paddleObject.GetComponent<Paddle_Base>();
         SetPaddlePositionToOrigin(CreatedPaddle, paddleStorage);
+        
+        CreatedPaddle.OnSpawned();
+        CreatedPaddle.OnLoad();
+        CreatedPaddle.OnAfterLoad();
     }
 
     void SetPaddlePositionToOrigin(Paddle_Base paddleBase, ScriptablePaddleStorage paddleStorage)
@@ -57,6 +61,10 @@ public class GameFieldPaddleAndBallLoader : GameSystem_Base
         GameObject ballObject = GameObject.Instantiate(ballStorage.BallPrefab, Vector3.zero, Quaternion.identity, null);
         CreatedBall = ballObject.GetComponent<Ball_Base>();
         SetBallPositionToOrigin(CreatedBall, paddleStorage, ballStorage);
+
+        CreatedBall.OnSpawned();
+        CreatedBall.OnLoad();
+        CreatedBall.OnAfterLoad();
     }
 
     void SetBallPositionToOrigin(Ball_Base ballBase, ScriptablePaddleStorage paddleStorage, ScriptableBallStorage ballStorage)

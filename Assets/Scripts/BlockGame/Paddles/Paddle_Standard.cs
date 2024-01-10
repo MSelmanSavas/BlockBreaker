@@ -4,7 +4,7 @@ using UnityEngine;
 public class Paddle_Standard : Paddle_Base
 {
     ScriptablePaddleStorage _paddleStorage;
-    float _positionChangeAffectStrengthToBall = 50f;
+    float _contactPointStrengthToAffectBallTrajectory = 10f;
 
     private void Start()
     {
@@ -17,19 +17,22 @@ public class Paddle_Standard : Paddle_Base
         if (!other.gameObject.TryGetComponent(out Ball_Base ball))
             return;
 
-        if (!ball.TryGetData(out EntityData_Rigidbody2D rigidbody2DData))
+        if (!ball.TryGetData(out EntityData_Rigidbody2D ballRigidbody))
             return;
 
         if (!TryGetData(out EntityData_PositionChange positionChange))
             return;
 
-        float magnitude = rigidbody2DData.Rigidbody2D.velocity.magnitude;
-        Vector2 positionChangeVector = positionChange.CurrentPosition - positionChange.PreviousPosition;
+        ContactPoint2D contactPoint = other.GetContact(0);
+
+        Vector2 contactVector = contactPoint.point - (Vector2)transform.position;
 
         if (_paddleStorage != null)
-            _positionChangeAffectStrengthToBall = _paddleStorage.PositionChangeAffectStrengthToBall;
+            _contactPointStrengthToAffectBallTrajectory = _paddleStorage.ContactPointStrengthToAffectBallTrajectory;
 
-        rigidbody2DData.Rigidbody2D.velocity += positionChangeVector * _positionChangeAffectStrengthToBall;
-        rigidbody2DData.Rigidbody2D.velocity = rigidbody2DData.Rigidbody2D.velocity.normalized * magnitude;
+        float magnitude = ballRigidbody.Rigidbody2D.velocity.magnitude;
+
+        ballRigidbody.Rigidbody2D.velocity = Vector2.up + contactVector * _contactPointStrengthToAffectBallTrajectory;
+        ballRigidbody.Rigidbody2D.velocity = ballRigidbody.Rigidbody2D.velocity.normalized * magnitude;
     }
 }

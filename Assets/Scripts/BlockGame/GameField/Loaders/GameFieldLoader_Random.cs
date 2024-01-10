@@ -53,7 +53,12 @@ public class GameFieldLoader_Random : GameSystem_Base
                 GameObject randomBlockPrefab = GetRandomBlockPrefab(scriptableBlocksStorage);
                 GameObject spawnedBlock = GameObject.Instantiate(randomBlockPrefab, position, Quaternion.identity);
                 IGameEntity gameEntity = spawnedBlock.GetComponent<IGameEntity>();
+                
                 gameFieldManager.TryAddGameEntity(index, gameEntity);
+
+                gameEntity.OnSpawned();
+                gameEntity.OnLoad();
+                gameEntity.OnAfterLoad();
             }
     }
 

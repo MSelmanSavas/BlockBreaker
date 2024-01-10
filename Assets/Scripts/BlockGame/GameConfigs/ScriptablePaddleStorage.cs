@@ -13,7 +13,7 @@ public class ScriptablePaddleStorage : ScriptableObject
     public float PaddleMovementSpeed { get; private set; }
 
     [field: SerializeField]
-    public float PositionChangeAffectStrengthToBall { get; private set; }
+    public float ContactPointStrengthToAffectBallTrajectory { get; private set; }
     
     [field: SerializeField]
     public GameObject PaddlePrefab { get; private set; }
