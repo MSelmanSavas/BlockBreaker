@@ -53,7 +53,7 @@ public class GameFieldLoader_Random : GameSystem_Base
                 GameObject randomBlockPrefab = GetRandomBlockPrefab(scriptableBlocksStorage);
                 GameObject spawnedBlock = GameObject.Instantiate(randomBlockPrefab, position, Quaternion.identity);
                 IGameEntity gameEntity = spawnedBlock.GetComponent<IGameEntity>();
-                
+
                 gameFieldManager.TryAddGameEntity(index, gameEntity);
 
                 gameEntity.OnSpawned();
@@ -64,6 +64,16 @@ public class GameFieldLoader_Random : GameSystem_Base
 
     GameObject GetRandomBlockPrefab(ScriptableBlocksStorage scriptableBlocksStorage)
     {
-        return scriptableBlocksStorage.BlockStorageDatas.ElementAt(Random.Range(0, scriptableBlocksStorage.BlockStorageDatas.Count)).Value.Prefab;
+        float randomChance = Random.Range(0f, 100f);
+
+        System.Type typeToGet = randomChance switch
+        {
+            <= 3 => typeof(Block_HorizontalExploder),
+            <= 7 => typeof(Block_VerticalExploder),
+            <= 12 => typeof(Block_Bomb),
+            _ => typeof(Block_Standard),
+        };
+
+        return scriptableBlocksStorage.BlockStorageDatas[typeToGet].Prefab;
     }
 }

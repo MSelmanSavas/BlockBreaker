@@ -35,7 +35,7 @@ public class BlockData_ChangeSpriteOnHealthChange : GameEntityData_Base
         }
     }
 
-    void OnHealthChange(float healthAmount)
+    void OnHealthChange(float previousHealth, float healthAmount)
     {
         int spriteIndex = 0;
 

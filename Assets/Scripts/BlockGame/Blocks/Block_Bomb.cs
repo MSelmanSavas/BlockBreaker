@@ -5,10 +5,22 @@ public class Block_Bomb : Block_Base
     [SerializeField] int _areaExplodeRadius = 3;
     [SerializeField] float _damageAmount = 500;
 
-    private void Start()
+    private void OnEnable()
     {
         if (TryGetData(out BlockData_Health health))
+        {
+            health.OnHealthChange += OnHealthChange;
             health.OnHealthDeplete += OnHealthDeplete;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (TryGetData(out BlockData_Health health))
+        {
+            health.OnHealthChange -= OnHealthChange;
+            health.OnHealthDeplete -= OnHealthDeplete;
+        }
     }
 
     void OnHealthDeplete()
@@ -47,7 +59,44 @@ public class Block_Bomb : Block_Base
                 if (!gameEntity.TryGetData(out BlockData_Health blockHealth))
                     continue;
 
+                if (TryGetData(out BlockData_ComboExplosionMultiplier selfCombo))
+                    if (gameEntity.TryGetData(out BlockData_ComboExplosionMultiplier entityCombo))
+                    {
+                        entityCombo.SetComboMultiplier(selfCombo.ComboMultiplier + 1f);
+                    }
+
                 blockHealth.ChangeHealth(-_damageAmount);
             }
+    }
+
+    void OnHealthChange(float previousHealth, float currentHealth)
+    {
+        float scoreChange = previousHealth - currentHealth;
+
+        float comboMultiplier = 1f;
+
+        if (TryGetData(out BlockData_ComboExplosionMultiplier comboExplosionMultiplier))
+        {
+            if (currentHealth != 0)
+                comboExplosionMultiplier.ResetComboMultiplier();
+
+            comboMultiplier = comboExplosionMultiplier.ComboMultiplier;
+        }
+
+        TryChangeScore(scoreChange, comboMultiplier);
+    }
+
+    void TryChangeScore(float scoreChange, float comboMultiplier)
+    {
+        if (!TryGetData(out BlockData_GameSystems gameSystems))
+            return;
+
+        if (gameSystems.GetAttachedGameGameSystems() == null)
+            return;
+
+        if (!gameSystems.GetAttachedGameGameSystems().TryGetGameSystemByType(out GameScoreSystem gameScoreSystem))
+            return;
+
+        gameScoreSystem.ChangeScore(scoreChange * comboMultiplier);
     }
 }

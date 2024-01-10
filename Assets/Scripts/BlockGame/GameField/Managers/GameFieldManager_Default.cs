@@ -116,6 +116,11 @@ public class GameFieldManager_Default : GameSystem_Base
             gameFieldManagerData.SetAttachedGameFieldManager(this);
         }
 
+        if (gameEntity.TryGetOrAddGetData(out BlockData_GameSystems gameSystemsData))
+        {
+            gameSystemsData.SetAttachedGameGameSystems(GameSystems);
+        }
+
         if (gameEntity.TryGetOrAddGetData(out BlockData_Index indexData))
         {
             indexData.SetIndices(new List<Vector2Int> { index });

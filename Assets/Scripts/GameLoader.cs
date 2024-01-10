@@ -17,6 +17,7 @@ public class GameLoader : MonoBehaviour
         };
 
         GameSystems gameSystems = gameSystemsObj.AddComponent<GameSystems>();
+        gameSystems.TryAddGameSystemByTypeImmediately<GameScoreSystem>(autoInitialize: false);
         gameSystems.TryAddGameSystemByTypeImmediately<GameplayVariablesSystem>(autoInitialize: false);
         gameSystems.TryAddGameSystemByTypeImmediately<GameFieldBoundryLoader>(autoInitialize: false);
         gameSystems.TryAddGameSystemByTypeImmediately<GameFieldManager_Default>(autoInitialize: false);
