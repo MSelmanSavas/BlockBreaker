@@ -58,7 +58,8 @@ public class BallLaunchSystem : GameSystem_Base
         if (!_isInputActive)
             return;
 
-        if (!Input.GetKeyDown(KeyCode.Space))
+        if (!TryCheckKeyboardInput()
+        && !TryCheckTouchInput())
             return;
 
         if (!Ball.TryGetOrAddGetData(out EntityData_Rigidbody2D rigidbody2DData))
@@ -74,5 +75,24 @@ public class BallLaunchSystem : GameSystem_Base
 
         _gameStateManager.TrySetGameState(GameState.Playing);
         GameSystems.TryRemoveGameSystem(this);
+    }
+
+    bool TryCheckKeyboardInput()
+    {
+        if (!Input.GetKeyDown(KeyCode.Space))
+            return false;
+
+        return true;
+    }
+
+    bool TryCheckTouchInput()
+    {
+        if (Input.touchCount <= 0)
+            return false;
+
+        if (Input.GetTouch(0).phase != TouchPhase.Began)
+            return false;
+
+        return true;
     }
 }

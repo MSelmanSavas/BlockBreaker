@@ -100,27 +100,63 @@ public class PaddleInputManager : GameSystem_Base
 
         Vector3 previousPosition = Paddle.transform.position;
 
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            Paddle.transform.position += Vector3.left * _paddleMovementSpeed * gameSystemContext.DeltaTime;
+        Vector3 input = Vector3.zero;
 
-            if (Paddle.transform.position.x < LeftRightPaddleMovementLimites.x)
-                Paddle.transform.position = Paddle.transform.position.WithX(LeftRightPaddleMovementLimites.x);
+
+        if (TryGetInputFromKeyboard(out input))
+        {
+            float xMovement = input.x * _paddleMovementSpeed * gameSystemContext.DeltaTime + Paddle.transform.position.x;
+            Paddle.transform.position = Paddle.transform.position.WithX(xMovement);
         }
 
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (TryGetInputFromTouch(out input))
         {
-            Paddle.transform.position += Vector3.right * _paddleMovementSpeed * gameSystemContext.DeltaTime;
-
-
-            if (Paddle.transform.position.x > LeftRightPaddleMovementLimites.y)
-                Paddle.transform.position = Paddle.transform.position.WithX(LeftRightPaddleMovementLimites.y);
+            Paddle.transform.position = Paddle.transform.position.WithX(input.x);
         }
+
+        if (Paddle.transform.position.x < LeftRightPaddleMovementLimites.x)
+            Paddle.transform.position = Paddle.transform.position.WithX(LeftRightPaddleMovementLimites.x);
+
+        if (Paddle.transform.position.x > LeftRightPaddleMovementLimites.y)
+            Paddle.transform.position = Paddle.transform.position.WithX(LeftRightPaddleMovementLimites.y);
 
         if (Paddle.TryGetData(out EntityData_PositionChange positionChange))
         {
             positionChange.PreviousPosition = previousPosition;
             positionChange.CurrentPosition = Paddle.transform.position;
         }
+    }
+
+    bool TryGetInputFromKeyboard(out Vector3 input)
+    {
+        input = Vector3.zero;
+
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            input = Vector3.left;
+            return true;
+        }
+
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            input = Vector3.right;
+            return true;
+        }
+
+        return false;
+    }
+
+    bool TryGetInputFromTouch(out Vector3 input)
+    {
+        input = Vector3.zero;
+
+        if (Input.touchCount <= 0)
+            return false;
+
+        if (Input.GetTouch(0).phase != TouchPhase.Moved)
+            return false;
+
+        input = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+        return true;
     }
 }
